@@ -1,3 +1,6 @@
+<div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1>
+<div><a class="btn btn-primary" href="/songs/new">Post a song!</a></div>
+</div>
 <% @songs.each do |song| %>
   <div class="song">
     <h3><%= song.title %> <small>(by: <%= song.author %>)</small></h3>
@@ -6,5 +9,3 @@
     </p>
   </div>
 <% end %>
-
-<a href="/songs/new">Post a song!</a>

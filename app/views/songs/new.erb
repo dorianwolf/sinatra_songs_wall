@@ -1,17 +1,30 @@
+<div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1></div>
+
+<% if @song.errors.any? %>
+  <div>
+    <strong>Some issues with your song, please fix them:</strong>
+    <ul>
+      <% @song.errors.full_messages.each do |song| %>
+      <li><%= song %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <form method="post" action="/songs">
-  <div>
-    <label>Author:</label>
-    <input type="text" name="author">
+  <div class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-music"></span></span>
+    <input type="text" name="title" class="form-control" placeholder="title" value="<%= @song.title %>">
   </div>
-  <div>
-    <label>Song title:</label>
-    <input type="text" name="title">
+  <div class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+    <input type="text" name="author" class="form-control" placeholder="author" value="<%= @song.author %>">
   </div>
-  <div>
-    <label>URL:</label>
-    <input type="text" name="url">
+  <div class="input-group">
+    <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
+    <input type="text" name="url" class="form-control" placeholder="url" value="<%= @song.url %>">
   </div>
-  <div>
-    <input type="submit" value="Submit">
+  <div class="input-group">
+    <input type="submit" class="btn btn-primary" value="Submit">
   </div>
 </form>
