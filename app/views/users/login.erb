@@ -1,6 +1,7 @@
-<div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1></div>
+<div class="jumbotron"><h1 class="header"><strong>Login</strong></h1>
+<div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div></div>
 
-<form method="post" action="/users">
+<form method="post" action="/users/login">
   <div class="input-group">
     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
     <input type="text" name="name" class="form-control" placeholder="name" value="<%= @user.name %>">

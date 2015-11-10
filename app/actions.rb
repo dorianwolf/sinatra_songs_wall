@@ -20,7 +20,7 @@ get '/users/login' do
 end
 
 get '/users/signup' do
-  @users = User.all
+  @user = User.new
   erb :'users/signup'
 end
 
@@ -48,5 +48,15 @@ post '/users' do
     redirect '/songs'
   else
     erb :'users/signup'
+  end
+end
+
+post '/users/login' do
+  user = User.find_by(name: params[:name])
+  if user && user.password == params[:password]
+    session[:id] = user.id
+    redirect '/songs'
+  else
+    erb :'users/login'
   end
 end

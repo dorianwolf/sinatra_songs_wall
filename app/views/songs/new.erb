@@ -1,11 +1,13 @@
 <div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1></div>
+<div class="btn btn-primary"><a href="/users/login" class="button-txt">Login</a></div>
+<div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div>
 
 <% if @song.errors.any? %>
   <div>
     <strong>Some issues with your song, please fix them:</strong>
     <ul>
-      <% @song.errors.full_messages.each do |song| %>
-      <li><%= song %></li>
+      <% @song.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
       <% end %>
     </ul>
   </div>
