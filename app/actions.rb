@@ -5,7 +5,7 @@ get '/' do
 end
 
 get '/songs' do
-  @songs = Song.all
+  @songs = Song.all.order(upvotes: :desc)
   erb :'songs/index'
 end
 
@@ -46,21 +46,38 @@ post '/songs' do
 end
 
 post '/users/login' do
-  @user = User.new(
-  name: params[:name],
-  password: params[:password]
-  )
-  if @user.save
-    session[:id] = @user.id
+  user = User.find_by(name: params[:name])
+  if user && user.password == params[:password]
+    session[:id] = user.id
     redirect '/songs'
   else
-    erb :'users/signup'
+    @error = 'Invalid username or password'
+    erb :'users/login'
   end
+end
+
+post '/users/signup' do
+  @user = User.new
+  @user.name = params[:name]
+  @user.password = params[:password]
+  @user.save
+  session[:id] = @user.id
+  redirect '/songs'
 end
 
 post '/songs/:id' do
   song = Song.find(params[:id])
-  song.upvotes += 1
-  song.save
-  redirect '/songs'
+  poster = User.find(session[:id])
+  not_upvoted = true
+  song.user.each do |u|
+    not_upvoted = false if u.name == poster.name
+  end
+  if not_upvoted
+    song.user << poster
+    song.upvotes += 1
+    song.save
+    redirect '/songs'
+  else
+    redirect '/songs'
+  end
 end

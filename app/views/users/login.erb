@@ -1,14 +1,16 @@
 <div class="jumbotron"><h1 class="header"><a href="/"><strong>Song Wall</strong></a></h1>
 <div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div></div>
 
+<p><%= @error %>
+
 <form method="post" action="/users/login">
   <div class="input-group">
     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-    <input type="text" name="name" class="form-control" placeholder="name" value="<%= @user.name %>">
+    <input type="text" name="name" class="form-control" placeholder="name" value="name">
   </div>
   <div class="input-group">
     <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>
-    <input type="text" name="password" class="form-control" placeholder="password" value="<%= @user.password %>">
+    <input type="text" name="password" class="form-control" placeholder="password" value="password">
   </div>
   <div class="input-group">
     <input type="submit" class="btn btn-primary" value="Submit">

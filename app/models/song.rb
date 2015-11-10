@@ -1,4 +1,4 @@
 class Song < ActiveRecord::Base
-  belongs_to :user
-  validates :title, :user, presence: true
+  has_and_belongs_to_many :user
+  validates :title, :username, presence: true
 end
