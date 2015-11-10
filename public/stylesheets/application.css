@@ -1,9 +1,5 @@
-.header {
-}
-
 .button-txt {
   color: white;
-  margin: auto;
 }
 
 .jumbotron {
@@ -15,4 +11,8 @@
 
 .song{
   padding: 1% 15%;
+}
+
+#login-button{
+  border-radius: 6px;
 }

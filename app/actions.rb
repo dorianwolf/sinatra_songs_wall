@@ -13,6 +13,16 @@ get '/songs/new' do
   erb :'songs/new'
 end
 
+get '/users/login' do
+  @user = User.new
+  erb :'users/login'
+end
+
+get '/users/signup' do
+  @users = User.all
+  erb :'users/signup'
+end
+
 post '/songs' do
   @song = Song.new(
   author: params[:author],
@@ -23,5 +33,17 @@ post '/songs' do
     redirect '/songs'
   else
     erb :'songs/new'
+  end
+end
+
+post '/users' do
+  @user = User.new(
+  name: params[:name],
+  password: params[:password]
+  )
+  if @user.save
+    redirect '/songs'
+  else
+    erb :'users/signup'
   end
 end
