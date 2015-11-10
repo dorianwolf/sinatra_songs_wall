@@ -8,13 +8,14 @@
 <% end %>
 <div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div>
 </div>
-<% @songs.each do |song| %>
-    <div class="song">
-      <h3><a href="/songs/<%= song.id %>"><%= song.title %></a> <small>(by: <%= song.username %>)</small></h3>
-      <p><%= song.url %></p>
-        <form method="post" action="/songs/<%= song.id %>">
-          <input type="submit" class="btn btn-primary" value="Upvote"><p>upvotes: <%= song.upvotes %></p>
-        </form>
-    </div>
 
-<% end %>
+<div class="song">
+  <h3><a href="/songs/<%= @song.id %>"><%= @song.title %></a> <small>(by: <%= @song.username %>)</small></h3>
+  <p><%= @song.url %></p>
+    <form method="post" action="/songs/<%= @song.id %>">
+      <input type="submit" class="btn btn-primary" value="Upvote"><p>upvotes: <%= @song.upvotes %></p>
+    </form>
+    <form method="post" action="/songs/<%= @song.id %>/review">
+      <input type="text" name="content" class="form-control" placeholder="add your review here" value="add your review here">
+    </form>
+</div>

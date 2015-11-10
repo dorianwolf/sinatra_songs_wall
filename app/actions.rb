@@ -1,5 +1,13 @@
 # Homepage (Root path)
 
+helpers do
+  def current_user
+    if session[:id] and user = User.find(session[:id])
+      user
+    end
+  end
+end
+
 get '/' do
   erb :index
 end
@@ -27,6 +35,11 @@ end
 get '/users/signup' do
   @user = User.new
   erb :'users/signup'
+end
+
+get '/songs/:id' do
+  @song = Song.find params[:id]
+  erb :'songs/show'
 end
 
 post '/songs' do
@@ -67,7 +80,7 @@ end
 
 post '/songs/:id' do
   song = Song.find(params[:id])
-  poster = User.find(session[:id])
+  poster = current_user
   not_upvoted = true
   song.user.each do |u|
     not_upvoted = false if u.name == poster.name
@@ -80,4 +93,13 @@ post '/songs/:id' do
   else
     redirect '/songs'
   end
+end
+
+post '/songs/:id/review' do
+  user = current_user
+  song = Song.find(params[:id])
+  @review = Review.new
+  @review.user_id = user.id
+  @review.song_id = song.id
+  # @review.content = params[:content]
 end
