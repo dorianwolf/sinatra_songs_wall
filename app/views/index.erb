@@ -1,5 +1,11 @@
-<div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1>
+<div class="jumbotron"><h1 class="header"><a href="/"><strong>Song Wall</strong></a></h1>
 <div class="btn btn-primary" id="post"><a href="/songs" class="button-txt">View the List</a></div>
-</div>
-<div class="btn btn-primary"><a href="/users/login" class="button-txt">Login</a></div>
+<% if session[:id] %>
+  <h4 id="username">Hello, <%= User.find(session[:id]).name %>!</h4>
+  <div><a class="btn btn-primary" href="/songs/new">Post a song!</a></div>
+  <div class="btn btn-primary"><a href="/users/logout" class="button-txt">Logout</a></div>
+<% else %>
+  <div class="btn btn-primary"><a href="/users/login" class="button-txt">Login</a></div>
+<% end %>
 <div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div>
+</div>

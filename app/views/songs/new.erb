@@ -1,7 +1,12 @@
-<div class="jumbotron"><h1 class="header"><strong>Song Wall</strong></h1></div>
-<div class="btn btn-primary"><a href="/users/login" class="button-txt">Login</a></div>
+<div class="jumbotron"><h1 class="header"><a href="/"><strong>Song Wall</strong></a></h1>
+<% if session[:id] %>
+  <h4 id="username">Hello, <%= User.find(session[:id]).name %>!</h4>
+  <div class="btn btn-primary"><a href="/users/logout" class="button-txt">Logout</a></div>
+<% else %>
+  <div class="btn btn-primary"><a href="/users/login" class="button-txt">Login</a></div>
+<% end %>
 <div class="btn btn-primary"><a href="/users/signup" class="button-txt">Sign Up</a></div>
-
+</div>
 <% if @song.errors.any? %>
   <div>
     <strong>Some issues with your song, please fix them:</strong>
@@ -17,10 +22,6 @@
   <div class="input-group">
     <span class="input-group-addon"><span class="glyphicon glyphicon-music"></span></span>
     <input type="text" name="title" class="form-control" placeholder="title" value="<%= @song.title %>">
-  </div>
-  <div class="input-group">
-    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-    <input type="text" name="author" class="form-control" placeholder="author" value="<%= @song.author %>">
   </div>
   <div class="input-group">
     <span class="input-group-addon"><span class="glyphicon glyphicon-globe"></span></span>

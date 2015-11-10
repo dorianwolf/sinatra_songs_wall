@@ -19,17 +19,24 @@ get '/users/login' do
   erb :'users/login'
 end
 
+get '/users/logout' do
+  session.delete(:id)
+  redirect '/'
+end
+
 get '/users/signup' do
   @user = User.new
   erb :'users/signup'
 end
 
 post '/songs' do
+  user = User.find(session[:id])
   @song = Song.new(
-  author: params[:author],
   title: params[:title],
   url: params[:url],
-  user_id: session[:id]
+  user_id: session[:id],
+  username: user.name,
+  upvotes: 0
   )
   if @song.save
     redirect '/songs'
@@ -38,7 +45,7 @@ post '/songs' do
   end
 end
 
-post '/users' do
+post '/users/login' do
   @user = User.new(
   name: params[:name],
   password: params[:password]
@@ -51,12 +58,9 @@ post '/users' do
   end
 end
 
-post '/users/login' do
-  user = User.find_by(name: params[:name])
-  if user && user.password == params[:password]
-    session[:id] = user.id
-    redirect '/songs'
-  else
-    erb :'users/login'
-  end
+post '/songs/:id' do
+  song = Song.find(params[:id])
+  song.upvotes += 1
+  song.save
+  redirect '/songs'
 end
