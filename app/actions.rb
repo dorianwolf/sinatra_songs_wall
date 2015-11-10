@@ -1,4 +1,5 @@
 # Homepage (Root path)
+
 get '/' do
   erb :index
 end
@@ -27,7 +28,8 @@ post '/songs' do
   @song = Song.new(
   author: params[:author],
   title: params[:title],
-  url: params[:url]
+  url: params[:url],
+  user_id: session[:id]
   )
   if @song.save
     redirect '/songs'
@@ -42,6 +44,7 @@ post '/users' do
   password: params[:password]
   )
   if @user.save
+    session[:id] = @user.id
     redirect '/songs'
   else
     erb :'users/signup'
