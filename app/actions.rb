@@ -4,6 +4,8 @@ helpers do
   def current_user
     if session[:id] and user = User.find(session[:id])
       user
+    else
+      false
     end
   end
   def get_comments(id)
@@ -43,9 +45,10 @@ get '/users/signup' do
 end
 
 get '/songs/:id' do
-  @song = Song.find params[:id]
-  @comments = get_comments(params[:id])
-  erb :'songs/show'
+    @error = 'You must be logged in to review'
+    @song = Song.find params[:id]
+    @comments = get_comments(params[:id])
+    erb :'songs/show'
 end
 
 post '/songs' do

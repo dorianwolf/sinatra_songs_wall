@@ -20,6 +20,10 @@
     <p>"<%=comment.content%>", at <%= comment.created_at%></p>
     <% end %>
     <form method="post" action="/songs/<%= @song.id %>/review">
+      <% if current_user %>
       <input type="text" name="content" class="form-control" placeholder="add your review here" value="add your review here">
+      <% else %>
+      <p><strong><%= @error %></strong></p>
+      <% end %>
     </form>
 </div>

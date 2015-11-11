@@ -1,6 +1,7 @@
 <div class="jumbotron"><h1 class="header"><a href="/"><strong>Song Wall</strong></a></h1>
 <% if session[:id] %>
   <h4 id="username">Hello, <%= User.find(session[:id]).name %>!</h4>
+  <p><%= @error %></p>
   <div><a class="btn btn-primary" href="/songs/new">Post a song!</a></div>
   <div class="btn btn-primary"><a href="/users/logout" class="button-txt">Logout</a></div>
 <% else %>
