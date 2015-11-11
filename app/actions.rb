@@ -4,14 +4,20 @@ helpers do
   def current_user
     if session[:id] and user = User.find(session[:id])
       user
-    else
-      false
     end
   end
   def get_comments(id)
     output = []
     all_reviews = Review.all.order(updated_at: :desc)
     output = all_reviews.where song_id: id
+  end
+  def not_reviewed(user_id, song_id)
+    no_reviews = true
+    song_reviews = get_comments(song_id)
+    song_reviews.each do |review|
+      no_reviews = false if review.user_id == user_id
+    end
+    no_reviews
   end
 end
 
@@ -90,11 +96,11 @@ end
 post '/songs/:id' do
   song = Song.find(params[:id])
   poster = current_user
-  not_upvoted = true
+  able = true
   song.user.each do |u|
-    not_upvoted = false if u.name == poster.name
+    able = false if u.name == poster.name
   end
-  if not_upvoted
+  if able
     song.user << poster
     song.upvotes += 1
     song.save
@@ -107,10 +113,15 @@ end
 post '/songs/:id/review' do
   user = current_user
   song = Song.find(params[:id])
-  @review = Review.new
-  @review.user_id = user.id
-  @review.song_id = song.id
-  @review.content = params[:content]
-  @review.save
+  able = not_reviewed(user.id, song.id)
+  if able
+    @review = Review.new
+    @review.user_id = user.id
+    @review.song_id = song.id
+    @review.content = params[:content]
+    @review.save
+  else
+    @error = 'You cannot review twice'
+  end
   redirect '/songs'
 end
