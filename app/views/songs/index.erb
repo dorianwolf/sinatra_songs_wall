@@ -13,7 +13,7 @@
     <div class="song">
       <h3><a href="/songs/<%= song.id %>"><%= song.title %></a> <small>(by: <%= song.username %>)</small></h3>
       <p><%= song.url %></p>
-        <form method="post" action="/songs/<%= song.id %>">
+        <form method="post" action="/upvote/<%= song.id %>">
           <input type="submit" class="btn btn-primary" value="Upvote"><p>upvotes: <%= song.upvotes %></p>
         </form>
     </div>

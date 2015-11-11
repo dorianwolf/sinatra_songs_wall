@@ -93,7 +93,7 @@ post '/users/signup' do
   redirect '/songs'
 end
 
-post '/songs/:id' do
+post '/upvote/:id' do
   song = Song.find(params[:id])
   poster = current_user
   able = true
@@ -104,9 +104,9 @@ post '/songs/:id' do
     song.user << poster
     song.upvotes += 1
     song.save
-    redirect '/songs'
+    redirect "/songs/#{song.id}"
   else
-    redirect '/songs'
+    redirect "/songs"
   end
 end
 
@@ -123,5 +123,12 @@ post '/songs/:id/review' do
   else
     @error = 'You cannot review twice'
   end
-  redirect '/songs'
+  redirect "/songs/#{song.id}"
+end
+
+post '/comment/:id/delete' do
+  review = Review.find(params[:id])
+  song_id = review.song_id
+  review.destroy
+  redirect "/songs/#{song_id}"
 end

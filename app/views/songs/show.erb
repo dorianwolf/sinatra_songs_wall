@@ -13,17 +13,22 @@
 <div class="song">
   <h3><a href="/songs/<%= @song.id %>"><%= @song.title %></a> <small>(by: <%= @song.username %>)</small></h3>
   <p><%= @song.url %></p>
-    <form method="post" action="/songs/<%= @song.id %>">
+    <form method="post" action="/upvote/<%= @song.id %>">
       <input type="submit" class="btn btn-primary" value="Upvote"><p>upvotes: <%= @song.upvotes %></p>
     </form>
     <% @comments.each do |comment|%>
-    <p>"<%=comment.content%>", at <%= comment.created_at%></p>
+      <p>"<%=comment.content%>", at <%= comment.created_at%></p>
+      <% if session[:id] == comment.user_id %>
+        <form method="post" action="/comment/<%= comment.id %>/delete">
+          <input type="submit" class="btn btn-primary" value="Delete">
+        </form>
+      <% end %>
     <% end %>
     <form method="post" action="/songs/<%= @song.id %>/review">
       <% if current_user %>
       <input type="text" name="content" class="form-control" placeholder="add your review here" value="add your review here">
       <% else %>
-      <p><strong><%= @error %></strong></p>
+      <p><strong><%= @error %></strong</p>
       <% end %>
     </form>
 </div>
