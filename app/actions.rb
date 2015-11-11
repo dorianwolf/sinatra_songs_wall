@@ -6,6 +6,11 @@ helpers do
       user
     end
   end
+  def get_comments(id)
+    output = []
+    all_reviews = Review.all.order(updated_at: :desc)
+    output = all_reviews.where song_id: id
+  end
 end
 
 get '/' do
@@ -39,6 +44,7 @@ end
 
 get '/songs/:id' do
   @song = Song.find params[:id]
+  @comments = get_comments(params[:id])
   erb :'songs/show'
 end
 
@@ -101,5 +107,7 @@ post '/songs/:id/review' do
   @review = Review.new
   @review.user_id = user.id
   @review.song_id = song.id
-  # @review.content = params[:content]
+  @review.content = params[:content]
+  @review.save
+  redirect '/songs'
 end
